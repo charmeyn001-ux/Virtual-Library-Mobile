@@ -22,7 +22,7 @@ class _BorrowPageState extends State<BorrowPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ✅ BACKGROUND COLOR HERE
+      // BACKGROUND COLOR HERE
       backgroundColor: Color.fromARGB(255, 9, 34, 88),
 
       appBar: AppBar(
@@ -36,7 +36,7 @@ class _BorrowPageState extends State<BorrowPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔥 TITLE
+            // TITLE
             Text(
               "Borrow",
               style: TextStyle(
