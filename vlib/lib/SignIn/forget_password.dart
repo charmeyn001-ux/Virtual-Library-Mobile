@@ -10,6 +10,12 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 9, 34, 88),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 3, 33, 97),
+        iconTheme: IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
+      ),
+    );
   }
 }
