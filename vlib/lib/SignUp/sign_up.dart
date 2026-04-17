@@ -3,6 +3,9 @@ import 'package:vlib/Animation/fade_animation.dart';
 import 'package:vlib/SignIn/sign_in.dart';
 import 'package:vlib/SignUp/agreements.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 void main() =>
     runApp(MaterialApp(debugShowCheckedModeBanner: false, home: SignUp()));
@@ -15,6 +18,60 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  Map<String, String> header = {'Content-Type': 'application/json'};
+
+  Future<void> signUpMethod() async {
+    try {
+      Map data = {
+        'username': usernameController.text,
+        'studentId': studentIdController.text,
+        'program': selectedProgram == "Others"
+            ? programController.text
+            : selectedProgram,
+        'password': passwordController.text,
+      };
+
+      String body = json.encode(data);
+
+      var url = Uri.parse("https://192.168.1.7:5000");
+
+      var response = await http.post(
+        Uri.parse("$url/api/RegisterUser"), // change if your API differs
+        body: body,
+        headers: header,
+      );
+
+      var result = json.decode(response.body);
+
+      print(result); // DEBUG response
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.snackbar(
+          "Success",
+          "Account created successfully!",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LogIn()),
+        );
+      } else {
+        Get.snackbar(
+          "Error",
+          result['message'] ?? "Registration failed",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Server error or no connection",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController studentIdController = TextEditingController();
   TextEditingController programController = TextEditingController();
@@ -349,7 +406,7 @@ class _SignUpState extends State<SignUp> {
                           margin: EdgeInsets.symmetric(horizontal: 50),
                           child: ElevatedButton(
                             onPressed: isFormValid()
-                                ? () {
+                                ? () async {
                                     if (passwordController.text !=
                                         confirmPasswordController.text) {
                                       ScaffoldMessenger.of(
@@ -364,12 +421,7 @@ class _SignUpState extends State<SignUp> {
                                       return;
                                     }
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Agreement(),
-                                      ),
-                                    );
+                                    await signUpMethod();
                                   }
                                 : null,
 

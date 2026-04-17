@@ -25,23 +25,60 @@ class _LogInState extends State<LogIn> {
       Map data = {'username': username, 'password': password};
       String body = json.encode(data);
 
-      var url = Uri.parse("192.168.1.7"); // Not sure if ipadd
+      var url = Uri.parse("https://192.168.1.7"); // Not sure if ipadd
 
-      var patient = await http.post(
+      var user = await http.post(
         Uri.parse("$url/api/GetLogin"),
         body: body,
         headers: header,
       );
 
-      var response = json.decode(patient.body);
+      //https://192.168.1.7/api/GetLogin/$username
+
+      //HTTP RESFUL
+      //1. GET - Retrive data.
+      //2. POST - Insert data in database. Used for Login, Registration
+      //3. PUT - Update information
+      //4. DELETE - Delete user information
+
+      //GET DATA
+      //  var patient = await http.get(
+      //   Uri.parse("$url/api/GetLogin/$username"),
+      //   headers: header,
+      // );
+
+      //GET DATA
+      //  var patient = await http.get(
+      //   Uri.parse("$url/api/GetLogin"),
+      //   body: body, //You will going to use this IF ONLY the GET HTTP will receive body (parameter)
+      //   headers: header,
+      // );
+
+      //UPDATE DATA
+      //  var patient = await http.put(
+      //   Uri.parse("$url/api/GetLogin"),
+      //   body: body,
+      //   headers: header,
+      // );
+
+      //DELETE DATA
+      //  var patient = await http.delete(
+      //   Uri.parse("$url/api/GetLogin"),
+      //   body: body, //You will going to use this IF ONLY the GET HTTP will receive body (parameter)
+      //   headers: header,
+      // );
+
+      var response = json.decode(user.body);
+
+      print(response); //Debuging check if there is a response data.
 
       if (response['data'] != null) {
-        if (patient.statusCode == 200) {
+        if (user.statusCode == 200) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
           );
-        } else if (patient.statusCode == 400) {
+        } else if (user.statusCode == 400) {
           Get.snackbar(
             'Error',
             'No Patient Username Found!',
@@ -57,8 +94,7 @@ class _LogInState extends State<LogIn> {
       );
     }
   }
-// until here
-
+  // until here
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
