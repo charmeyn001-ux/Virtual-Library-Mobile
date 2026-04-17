@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vlib/Home/Inbox/inbox_page.dart';
+
 import 'package:vlib/Home/Notification/notification_page.dart';
 import 'package:vlib/SignIn/sign_in.dart';
 
@@ -23,7 +23,7 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  List<Widget> get _pages => [_homeContent(), InboxPage(), NotificationPage()];
+  List<Widget> get _pages => [_homeContent(), NotificationPage()];
 
   Widget _homeContent() {
     return SafeArea(
@@ -279,6 +279,24 @@ class HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.history),
+              title: Text('History'),
+              onTap: () {
+                // Close the drawer
+                Navigator.pushNamed(context, '/history');
+                // Handle Home tap
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.archive),
+              title: Text('Archive'),
+              onTap: () {
+                // Close the drawer
+                Navigator.pushNamed(context, '/archive');
+                // Handle Home tap
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.logout),
               title: Text('Log-out'),
               onTap: () {
@@ -302,7 +320,6 @@ class HomePageState extends State<HomePage> {
         unselectedItemColor: const Color.fromARGB(136, 248, 247, 247),
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.inbox), label: 'inbox'),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'notifications',

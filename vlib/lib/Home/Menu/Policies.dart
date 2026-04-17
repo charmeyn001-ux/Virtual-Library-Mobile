@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 void main() =>
@@ -54,23 +55,27 @@ class PoliciesState extends State<Policies> {
             PolicyItem(
               title: "1. Borrowing and Circulation",
               content:
-                  "Limits: Borrow up to 3 general e-books and 1 reserved e-book at a time.\n"
+                  "Limits: Borrow up to 3 general books and 1 reserved book at a time.\n"
+                  "\n"
                   "Renewals: General e-books can be renewed twice.\n"
+                  "\n"
                   "Loan Periods: General (3 days), Overnight (3-5 PM to 9 AM).\n"
-                  "Fines: P5/day for overdue.\n"
+                  "\n"
+                  "Fines:  ₱5.00 day for overdue.\n"
+                  "\n"
                   "Non-Compliance: Overdue materials suspend privileges.",
             ),
 
             PolicyItem(
               title: "2. Lost or Damaged Books",
               content:
-                  "If borrowed materials are lost, you will be required to replace them.",
+                  "If a borrowed book is lost or damaged while under your care, you will be required to replace it..",
             ),
 
             PolicyItem(
               title: "3. Clearance",
               content:
-                  "All students must follow policies.\nFailure results in denial of clearance.\nLibrary will notify departments.",
+                  " Students who fail to meet these requirements will not be eligible for semesters clearance. The library will communicate any outstanding issues to the relevant university departments to facilitate the clearance process upon resolution.",
             ),
 
             SizedBox(height: 30),

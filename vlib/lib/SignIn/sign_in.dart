@@ -3,6 +3,9 @@ import 'package:vlib/Animation/fade_animation.dart';
 import 'package:vlib/Home/home_page.dart';
 import 'package:vlib/SignUp/sign_up.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http; // method for API
+import 'package:get/get.dart'; // method for API
 
 void main() =>
     runApp(MaterialApp(debugShowCheckedModeBanner: false, home: LogIn()));
@@ -15,6 +18,48 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  Map<String, String> header = {'Content-Type': 'application/json'}; //API
+
+  Future<void> vlibraryLoginMethod(String username, String password) async {
+    try {
+      Map data = {'username': username, 'password': password};
+      String body = json.encode(data);
+
+      var url = Uri.parse("192.168.1.7"); // Not sure if ipadd
+
+      var patient = await http.post(
+        Uri.parse("$url/api/GetLogin"),
+        body: body,
+        headers: header,
+      );
+
+      var response = json.decode(patient.body);
+
+      if (response['data'] != null) {
+        if (patient.statusCode == 200) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        } else if (patient.statusCode == 400) {
+          Get.snackbar(
+            'Error',
+            'No Patient Username Found!',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'No Record Found!',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+// until here
+
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -196,7 +241,7 @@ class _LogInState extends State<LogIn> {
                                         ),
                                         border: InputBorder.none,
 
-                                        // 👇 EYE ICON HERE
+                                        //  EYE ICON HERE
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             isPasswordVisible
@@ -257,15 +302,13 @@ class _LogInState extends State<LogIn> {
 
                                         if (usernameError == null &&
                                             passwordError == null) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => HomePage(),
-                                            ),
+                                          vlibraryLoginMethod(
+                                            usernameController.text,
+                                            passwordController.text,
                                           );
                                         }
                                       }
-                                    : null,
+                                    : null, //Login+API
 
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(double.infinity, 60),

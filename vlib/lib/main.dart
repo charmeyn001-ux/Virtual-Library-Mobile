@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vlib/Home/Borrow/borrow.dart';
 import 'package:vlib/Home/Borrow/reserve.dart';
-import 'package:vlib/Home/Inbox/inbox_page.dart';
 import 'package:vlib/Home/Menu/Policies.dart';
+import 'package:vlib/Home/Menu/archive.dart';
+import 'package:vlib/Home/Menu/history.dart';
 import 'package:vlib/Home/MyBorrowedBooks/mybooks.dart';
 import 'package:vlib/Home/Notification/notification_page.dart';
 import 'package:vlib/Home/Profile/profile.dart';
@@ -34,7 +35,6 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUp(),
         '/home': (context) => const HomePage(),
         '/notification': (context) => const NotificationPage(),
-        '/inbox': (context) => const InboxPage(),
         '/policies': (context) => const Policies(),
         '/profile': (context) => const Profile(),
         '/borrowpage': (context) => const BorrowPage(),
@@ -42,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/mybooks': (context) => const MyBooks(),
         '/reserve': (context) => const Reserve(),
         '/forgot': (context) => const ForgotPassword(),
+        '/archive': (context) => const Archive(),
+        '/history': (context) => const History(),
       },
     );
   }
